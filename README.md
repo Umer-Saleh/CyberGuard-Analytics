@@ -53,7 +53,7 @@ CyberGuard Analytics/
 ```bash
 cd "CyberGuard Analytics Backend"
 pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
+python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 API docs at `http://localhost:8000/docs`
@@ -104,17 +104,6 @@ npx playwright install
 npm run test:e2e
 ```
 
-## Team
-
-| Name | Roll Number |
-|------|-------------|
-| Ahmed Baig | SE-22068 |
-| Syed Noor Ul Talha | SE-22072 |
-| Muhammad Umer Saleh | SE-22076 |
-| Syed Muhammad Reyan Imam | SE-22091 |
-
-**Course:** Stochastic Process (SE-410)
-**University:** NED University of Engineering and Technology
 
 ## License
 
