@@ -106,7 +106,7 @@ pip install -r requirements.txt
 ### Run the Server
 
 ```bash
-uvicorn main:app --reload --port 8000
+python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 The API is now live at `http://localhost:8000`. Interactive docs at `http://localhost:8000/docs` (Swagger UI).
