@@ -1,31 +1,24 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { PageTransition } from "@/components/ui/PageTransition";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BookOpen, GitBranch, Calculator, Workflow, Code, Copy, Check, ArrowUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const fadeUp = (d: number) => ({
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { delay: d, duration: 0.4 },
-});
-
 const states = [
-  { name: "Safe (S₀)", color: "bg-success", desc: "Normal operation" },
-  { name: "Under Attack (S₁)", color: "bg-warning", desc: "Active intrusion attempt" },
-  { name: "Compromised (S₂)", color: "bg-destructive", desc: "Successful breach" },
-  { name: "Recovery (S₃)", color: "bg-primary", desc: "Restoring system" },
+  { name: "Safe (S₀)", color: "bg-green-500", desc: "Normal operation" },
+  { name: "Under Attack (S₁)", color: "bg-amber-500", desc: "Active intrusion attempt" },
+  { name: "Compromised (S₂)", color: "bg-red-500", desc: "Successful breach" },
+  { name: "Recovery (S₃)", color: "bg-blue-500", desc: "Restoring system" },
 ];
 
 const equations: Record<string, string> = {
   poisson: "P(N(t) = k) = (λt)^k × e^(-λt) / k!",
   steadyState: "πQ = 0, π₀ + π₁ + π₂ + π₃ = 1",
-  matrix: `Q = | -(λ)    λ      0      0   |\n    |  α   -(α+β)   β      0   |\n    |  0      0    -(γ)    γ   |\n    |  δ      0      0    -(δ) |`,
+  matrix: `Q = | -(λ)    λ      0      0   |\n    |  α   -(α+β)    β      0   |\n    |  0      0    -(γ)     γ   |\n    |  δ      0      0    -(δ)  |`,
 };
 
 export default function DocumentationPage() {
@@ -79,7 +72,7 @@ export default function DocumentationPage() {
                   <div className="bg-muted/50 rounded-lg p-4 font-mono text-sm text-center overflow-x-auto relative group" role="math" aria-label="Poisson probability formula">
                     {equations.poisson}
                     <Button variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-7 w-7" onClick={() => copyEquation("poisson")} aria-label="Copy equation">
-                      {copied === "poisson" ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copied === "poisson" ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                     </Button>
                   </div>
                   <p className="text-sm text-muted-foreground">
@@ -95,7 +88,7 @@ export default function DocumentationPage() {
             <Card className="glass-card">
               <AccordionTrigger className="px-6 py-4 hover:no-underline">
                 <CardTitle className="flex items-center gap-2 text-left">
-                  <GitBranch className="h-5 w-5 text-accent" aria-hidden="true" />
+                  <GitBranch className="h-5 w-5 text-cyan-500" aria-hidden="true" />
                   Continuous-Time Markov Chain
                 </CardTitle>
               </AccordionTrigger>
@@ -115,19 +108,41 @@ export default function DocumentationPage() {
                       </div>
                     ))}
                   </div>
-                  <div className="bg-muted/50 rounded-lg p-6 text-center" role="img" aria-label="State transition diagram">
-                    <div className="flex flex-wrap justify-center items-center gap-4 text-sm font-mono">
-                      <Badge variant="outline" className="bg-success/10 border-success px-3 py-1.5">S₀ Safe</Badge>
-                      <span className="text-muted-foreground">→ λ →</span>
-                      <Badge variant="outline" className="bg-warning/10 border-warning px-3 py-1.5">S₁ Attack</Badge>
-                      <span className="text-muted-foreground">→ β →</span>
-                      <Badge variant="outline" className="bg-destructive/10 border-destructive px-3 py-1.5">S₂ Compromised</Badge>
-                      <span className="text-muted-foreground">→ γ →</span>
-                      <Badge variant="outline" className="bg-primary/10 border-primary px-3 py-1.5">S₃ Recovery</Badge>
-                      <span className="text-muted-foreground">→ δ →</span>
-                      <Badge variant="outline" className="bg-success/10 border-success px-3 py-1.5">S₀ Safe</Badge>
+                  <div className="bg-muted/50 rounded-lg p-6" role="img" aria-label="State transition diagram">
+                    <div className="flex flex-col items-center gap-4">
+                      {/* Forward path */}
+                      <div className="flex flex-wrap justify-center items-center gap-3 text-sm font-mono">
+                        <Badge variant="outline" className="bg-green-500/10 border-green-500 text-green-500 px-3 py-1.5">S₀ Safe</Badge>
+                        <span className="text-amber-500 font-semibold">— λ →</span>
+                        <Badge variant="outline" className="bg-amber-500/10 border-amber-500 text-amber-500 px-3 py-1.5">S₁ Under Attack</Badge>
+                        <span className="text-red-500 font-semibold">— β →</span>
+                        <Badge variant="outline" className="bg-red-500/10 border-red-500 text-red-500 px-3 py-1.5">S₂ Compromised</Badge>
+                        <span className="text-blue-500 font-semibold">— γ →</span>
+                        <Badge variant="outline" className="bg-blue-500/10 border-blue-500 text-blue-500 px-3 py-1.5">S₃ Recovery</Badge>
+                      </div>
+                      {/* Return paths */}
+                      <div className="flex flex-wrap justify-center items-center gap-6 text-xs font-mono text-muted-foreground">
+                        <span className="inline-flex items-center gap-1">
+                          <span className="text-green-500 font-semibold">← α ←</span>
+                          <span>S₁ → S₀ (defense success)</span>
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <span className="text-green-500 font-semibold">← δ ←</span>
+                          <span>S₃ → S₀ (patch complete)</span>
+                        </span>
+                      </div>
+                      {/* Visual diagram */}
+                      <div className="w-full max-w-lg mt-2 p-4 rounded-lg border border-border/50 bg-background/50">
+                        <pre className="text-xs sm:text-sm font-mono text-center leading-relaxed">
+{`        λ           β           γ
+  S₀ ------→ S₁ ------→ S₂ ------→ S₃
+  ↑  ←------  ↑                      |
+  |     α     |                      |
+  |           |          δ           |
+  └──────────────────────────────────┘`}
+                        </pre>
+                      </div>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-3">α: Defense success rate (S₁ → S₀)</p>
                   </div>
                 </CardContent>
               </AccordionContent>
@@ -138,7 +153,7 @@ export default function DocumentationPage() {
             <Card className="glass-card">
               <AccordionTrigger className="px-6 py-4 hover:no-underline">
                 <CardTitle className="flex items-center gap-2 text-left">
-                  <Calculator className="h-5 w-5 text-warning" aria-hidden="true" />
+                  <Calculator className="h-5 w-5 text-amber-500" aria-hidden="true" />
                   Mathematical Formulation
                 </CardTitle>
               </AccordionTrigger>
@@ -151,14 +166,14 @@ export default function DocumentationPage() {
                     <p className="font-semibold mb-2">Generator Matrix Q:</p>
                     {equations.matrix}
                     <Button variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-7 w-7" onClick={() => copyEquation("matrix")} aria-label="Copy matrix">
-                      {copied === "matrix" ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copied === "matrix" ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                     </Button>
                   </div>
                   <div className="bg-muted/50 rounded-lg p-4 font-mono text-sm relative group" role="math" aria-label="Steady state equations">
                     <p className="font-semibold mb-2">Solve: πQ = 0</p>
                     <p className="text-xs text-muted-foreground">{equations.steadyState}</p>
                     <Button variant="ghost" size="icon" className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity h-7 w-7" onClick={() => copyEquation("steadyState")} aria-label="Copy equation">
-                      {copied === "steadyState" ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copied === "steadyState" ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                     </Button>
                   </div>
                 </CardContent>
@@ -170,7 +185,7 @@ export default function DocumentationPage() {
             <Card className="glass-card">
               <AccordionTrigger className="px-6 py-4 hover:no-underline">
                 <CardTitle className="flex items-center gap-2 text-left">
-                  <Workflow className="h-5 w-5 text-success" aria-hidden="true" />
+                  <Workflow className="h-5 w-5 text-green-500" aria-hidden="true" />
                   System Workflow
                 </CardTitle>
               </AccordionTrigger>

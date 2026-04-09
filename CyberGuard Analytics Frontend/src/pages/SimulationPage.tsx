@@ -161,7 +161,7 @@ export default function SimulationPage() {
             <Card className="glass-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
-                  <Info className="h-5 w-5 text-accent" aria-hidden="true" />
+                  <Info className="h-5 w-5 text-cyan-500" aria-hidden="true" />
                   Quick Help
                 </CardTitle>
               </CardHeader>

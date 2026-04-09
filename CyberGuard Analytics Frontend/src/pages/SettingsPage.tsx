@@ -4,11 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
-import { Badge } from "@/components/ui/badge";
 import { useThemeContext } from "@/context/ThemeContext";
 import { useAccessibility } from "@/context/AccessibilityContext";
-import { Settings, Palette, Accessibility, Bell, RotateCcw, Sun, Moon, Monitor } from "lucide-react";
+import { Palette, Accessibility, Bell, RotateCcw, Sun, Moon, Monitor } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const fontScaleOptions = [
@@ -68,7 +66,7 @@ export default function SettingsPage() {
         <Card className="glass-card mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
-              <Accessibility className="h-5 w-5 text-accent" aria-hidden="true" />
+              <Accessibility className="h-5 w-5 text-violet-500" aria-hidden="true" />
               Accessibility
             </CardTitle>
           </CardHeader>
@@ -106,7 +104,7 @@ export default function SettingsPage() {
         <Card className="glass-card mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
-              <Bell className="h-5 w-5 text-warning" aria-hidden="true" />
+              <Bell className="h-5 w-5 text-amber-500" aria-hidden="true" />
               Notifications
             </CardTitle>
           </CardHeader>

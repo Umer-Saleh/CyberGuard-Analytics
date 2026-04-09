@@ -23,14 +23,15 @@ export function Footer() {
                 <br/>3. Muhammad Umer Saleh (SE-22076)
                 <br/>4. Syed Muhammad Reyan Imam (SE-22091)
               </li>
-              <li>Course: Stochastic process (SE-410)</li>
+              <li>Course: Stochastic Processes (SE-410)</li>
+              <li>Course Instructer: Miss Shumaila Ashfaq</li>
               <li>University: NED University of Engineering and Technology</li>
             </ul>
           </div>
           <div>
             <h3 className="font-semibold mb-3 text-sm">Links</h3>
             <a
-              href="https://github.com"
+              href="https://github.com/Umer-Saleh/CyberGuard-Analytics"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"

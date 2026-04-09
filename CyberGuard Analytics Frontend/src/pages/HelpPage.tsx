@@ -89,9 +89,9 @@ export default function HelpPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   {cat.category === "General" && <HelpCircle className="h-5 w-5 text-primary" aria-hidden="true" />}
-                  {cat.category === "Parameters" && <BookOpen className="h-5 w-5 text-accent" aria-hidden="true" />}
-                  {cat.category === "Troubleshooting" && <AlertTriangle className="h-5 w-5 text-warning" aria-hidden="true" />}
-                  {cat.category === "Tools & Features" && <Wrench className="h-5 w-5 text-success" aria-hidden="true" />}
+                  {cat.category === "Parameters" && <BookOpen className="h-5 w-5 text-cyan-500" aria-hidden="true" />}
+                  {cat.category === "Troubleshooting" && <AlertTriangle className="h-5 w-5 text-amber-500" aria-hidden="true" />}
+                  {cat.category === "Tools & Features" && <Wrench className="h-5 w-5 text-green-500" aria-hidden="true" />}
                   {cat.category}
                 </CardTitle>
               </CardHeader>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { PageTransition } from "@/components/ui/PageTransition";
@@ -15,7 +15,7 @@ import {
 } from "@/lib/api";
 import { computeSteadyState } from "@/lib/markov";
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid,
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Area, AreaChart,
   Tooltip as RTooltip, ResponsiveContainer, BarChart, Bar, Legend,
   ScatterChart, Scatter, ZAxis,
 } from "recharts";
@@ -157,8 +157,8 @@ export default function AnalysisPage() {
 
   const riskTrendData = useMemo(() => {
     const { alpha, beta, gamma, delta } = params;
-    return Array.from({ length: 24 }, (_, hour) => {
-      const lam = params.lambda * (0.65 + (0.7 * hour) / 23);
+    return Array.from({ length: 25 }, (_, hour) => {
+      const lam = params.lambda * (0.65 + (0.7 * hour) / 24);
       const pi = computeSteadyState(lam, alpha, beta, gamma, delta);
       return { hour, risk: +pi[2].toFixed(4) };
     });
@@ -232,7 +232,7 @@ export default function AnalysisPage() {
           <Card className="glass-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
-                <Dice5 className="h-5 w-5 text-accent" aria-hidden="true" />
+                <Dice5 className="h-5 w-5 text-violet-500" aria-hidden="true" />
                 Monte Carlo Distribution
               </CardTitle>
             </CardHeader>
@@ -256,20 +256,29 @@ export default function AnalysisPage() {
           <Card className="glass-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
-                <TrendingUp className="h-5 w-5 text-warning" aria-hidden="true" />
+                <TrendingUp className="h-5 w-5 text-amber-500" aria-hidden="true" />
                 Risk Trend Forecasting
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="h-56" role="img" aria-label="Risk trend over time">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={riskTrendData}>
+                  <AreaChart data={riskTrendData}>
+                    <defs>
+                      <linearGradient id="riskGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.02} />
+                      </linearGradient>
+                    </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                    <XAxis dataKey="hour" label={{ value: "Hour", position: "insideBottom", offset: -5 }} stroke="hsl(var(--muted-foreground))" />
+                    <XAxis dataKey="hour" interval={0} tick={{ fontSize: 10 }} label={{ value: "Hour", position: "insideBottom", offset: -5 }} stroke="hsl(var(--muted-foreground))" />
                     <YAxis stroke="hsl(var(--muted-foreground))" />
-                    <RTooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }} />
-                    <Line type="monotone" dataKey="risk" stroke="hsl(var(--warning))" strokeWidth={2} dot={false} name="Compromise Risk" />
-                  </LineChart>
+                    <RTooltip
+                      contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }}
+                      formatter={(value: number) => [value.toFixed(4), "Compromise Risk (π₂)"]}
+                    />
+                    <Area type="monotone" dataKey="risk" stroke="#f59e0b" strokeWidth={2.5} fill="url(#riskGradient)" dot={false} name="Compromise Risk" />
+                  </AreaChart>
                 </ResponsiveContainer>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
@@ -281,21 +290,33 @@ export default function AnalysisPage() {
           <Card className="glass-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
-                <GitCompare className="h-5 w-5 text-success" aria-hidden="true" />
+                <GitCompare className="h-5 w-5 text-green-500" aria-hidden="true" />
                 Scenario Comparison
               </CardTitle>
             </CardHeader>
             <CardContent>
+              <div className="flex gap-4 mb-3 text-xs">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: "#ef4444" }} />
+                  <span className="text-muted-foreground">Low Defense (α×0.45)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="h-3 w-3 rounded-sm" style={{ backgroundColor: "#22c55e" }} />
+                  <span className="text-muted-foreground">High Defense (α×2.2)</span>
+                </div>
+              </div>
               <div className="h-56" role="img" aria-label="Scenario comparison chart">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={scenarioData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis dataKey="state" stroke="hsl(var(--muted-foreground))" tick={{ fontSize: 11 }} />
-                    <YAxis stroke="hsl(var(--muted-foreground))" />
-                    <RTooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }} />
-                    <Legend />
-                    <Bar dataKey="A" fill="hsl(var(--destructive))" name="Low Defense (α×0.45)" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="B" fill="hsl(var(--success))" name="High Defense (α×2.2)" radius={[4, 4, 0, 0]} />
+                    <YAxis stroke="hsl(var(--muted-foreground))" unit="%" />
+                    <RTooltip
+                      contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8 }}
+                      formatter={(value: number) => [`${value}%`]}
+                    />
+                    <Bar dataKey="A" fill="#ef4444" name="Low Defense (α×0.45)" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="B" fill="#22c55e" name="High Defense (α×2.2)" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
