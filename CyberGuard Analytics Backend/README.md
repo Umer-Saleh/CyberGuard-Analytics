@@ -153,18 +153,6 @@ python -m pytest tests -v
 
 The React frontend that consumes this API: [`CyberGuard Analytics Frontend/`](../CyberGuard%20Analytics%20Frontend/)
 
-## Team
-
-| Name | Roll Number |
-|------|-------------|
-| Ahmed Baig | SE-22068 |
-| Syed Noor Ul Talha | SE-22072 |
-| Muhammad Umer Saleh | SE-22076 |
-| Syed Muhammad Reyan Imam | SE-22091 |
-
-**Course:** Stochastic Process (SE-410)
-**University:** NED University of Engineering and Technology
-
 ## License
 
 This project is built for academic demonstration purposes.
