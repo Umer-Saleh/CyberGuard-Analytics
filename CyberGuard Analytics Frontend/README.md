@@ -118,18 +118,6 @@ The frontend communicates with a FastAPI backend via these endpoints:
 
 Backend code: [`CyberGuard Analytics Backend/`](../CyberGuard%20Analytics%20Backend/)
 
-## Team
-
-| Name | Roll Number |
-|------|-------------|
-| Ahmed Baig | SE-22068 |
-| Syed Noor Ul Talha | SE-22072 |
-| Muhammad Umer Saleh | SE-22076 |
-| Syed Muhammad Reyan Imam | SE-22091 |
-
-**Course:** Stochastic Process (SE-410)
-**University:** NED University of Engineering and Technology
-
 ## License
 
 This project is built for academic demonstration purposes.
