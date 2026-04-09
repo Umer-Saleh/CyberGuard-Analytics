@@ -17,14 +17,10 @@ export function Footer() {
           <div>
             <h3 className="font-semibold mb-3 text-sm">Project Information</h3>
             <ul className="space-y-1.5 text-sm text-muted-foreground">
-              <li>Group Members: 
-                <br/>1. Ahmed baig (SE-22068)
-                <br/>2. Syed Noor Ul Talha (SE-22072)
-                <br/>3. Muhammad Umer Saleh (SE-22076)
-                <br/>4. Syed Muhammad Reyan Imam (SE-22091)
+              <li>Project By: 
+                <br/> Umer Saleh 
               </li>
               <li>Course: Stochastic Processes (SE-410)</li>
-              <li>Course Instructer: Miss Shumaila Ashfaq</li>
               <li>University: NED University of Engineering and Technology</li>
             </ul>
           </div>
